@@ -1,15 +1,14 @@
 ---
 name: "Bug report"
-about: "Report something that's broken. Please ensure your Laravel version is still supported: https://laravel.com/docs/releases#support-policy"
+about: "Please let us know about technical issues you encounter with this package."
 ---
 
 <!-- DO NOT THROW THIS AWAY -->
 <!-- Fill out the FULL versions with patch versions -->
 
-- Nexmo Notification Channel Version: #.#.#
+- SignalWire Notification Channel Version: #.#.#
 - Laravel Version: #.#.#
 - PHP Version: #.#.#
-- Database Driver & Version:
 
 ### Description:
 

@@ -2,25 +2,25 @@
 
 namespace Illuminate\Tests\Notifications\Channels;
 
-use Illuminate\Notifications\Channels\NexmoShortcodeChannel;
+use Illuminate\Notifications\Channels\SignalWireShortcodeChannel;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Tests\Notifications\TestCase;
 use Mockery as m;
-use Nexmo\Message\Client;
+use SignalWire\Message\Client;
 
-class NexmoShortcodeChannelTest extends TestCase
+class SignalWireShortcodeChannelTest extends TestCase
 {
-    public function testShortcodeIsSentViaNexmo()
+    public function testShortcodeIsSentViaSignalWire()
     {
-        $notification = new NotificationNexmoShortcodeChannelTestNotification;
-        $notifiable = new NotificationNexmoShortcodeChannelTestNotifiable;
+        $notification = new NotificationSignalWireShortcodeChannelTestNotification;
+        $notifiable = new NotificationSignalWireShortcodeChannelTestNotifiable;
 
-        $channel = new NexmoShortcodeChannel(
-            $nexmo = m::mock(Client::class)
+        $channel = new SignalWireShortcodeChannel(
+            $SignalWire = m::mock(Client::class)
         );
 
-        $nexmo->shouldReceive('sendShortcode')
+        $SignalWire->shouldReceive('sendShortcode')
             ->with([
                 'type' => 'alert',
                 'to' => '5555555555',
@@ -34,7 +34,7 @@ class NexmoShortcodeChannelTest extends TestCase
     }
 }
 
-class NotificationNexmoShortcodeChannelTestNotifiable
+class NotificationSignalWireShortcodeChannelTestNotifiable
 {
     use Notifiable;
 
@@ -46,7 +46,7 @@ class NotificationNexmoShortcodeChannelTestNotifiable
     }
 }
 
-class NotificationNexmoShortcodeChannelTestNotification extends Notification
+class NotificationSignalWireShortcodeChannelTestNotification extends Notification
 {
     public function toShortcode($notifiable)
     {

@@ -1,3 +1,3 @@
 # Contribution Guide
 
-The Laravel contributing guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Contributions to our open-source packages are welcomed and encouraged. Pleasae feel free to submit a pull request, submit issue reports, or make feature requests at the package's [Github repository](https://github.com/MankatoClinic/laravel-signalwire-notification-channel).

@@ -1,8 +1,8 @@
 <?php
 
-namespace Illuminate\Notifications\Messages;
+namespace MCDev\Notifications\Messages;
 
-class NexmoMessage
+class SignalWireMessage
 {
     /**
      * The message content.
@@ -26,25 +26,25 @@ class NexmoMessage
     public $type = 'text';
 
     /**
-     * The custom Nexmo client instance.
+     * The custom SignalWire client instance.
      *
-     * @var \Nexmo\Client|null
+     * @var \SignalWire\Relay\Client|null
      */
     public $client;
 
     /**
-     * The client reference.
+     * Message tags
      *
-     * @var string
+     * @var array
      */
-    public $clientReference = '';
+    public $tags = '';
 
     /**
-     * The webhook to be called with status updates.
+     * Message context
      *
      * @var string
      */
-    public $statusCallback = '';
+    public $context = 'notifications';
 
     /**
      * Create a new message instance.
@@ -101,30 +101,37 @@ class NexmoMessage
      * @param  string  $clientReference
      * @return $this
      */
-    public function clientReference($clientReference)
+    public function withContext($context)
     {
-        $this->clientReference = $clientReference;
+        $this->context = $context ?? '';
 
         return $this;
     }
 
-    /**
-     * Set the webhook callback URL to update the message status.
+        /**
+     * Set the client reference (up to 40 characters).
      *
-     * @param  string  $callback
+     * @param  string|array  $tags
      * @return $this
      */
-    public function statusCallback(string $callback)
+    public function withTags($tags)
     {
-        $this->statusCallback = $callback;
+        if (!empty($tags)) {
+            if (is_string($tags)) $this->tags = explode(',',$tags);
+            elseif (!is_array($tags)) $this->tags = [$tags];
+            else $this->tags = $tags;
+        }
+        else {
+            $this->tags=[];
+        }
 
         return $this;
     }
 
     /**
-     * Set the Nexmo client instance.
+     * Set the SignalWire client instance.
      *
-     * @param  \Nexmo\Client  $clientReference
+     * @param  \SignalWire\Client  $clientReference
      * @return $this
      */
     public function usingClient($client)
