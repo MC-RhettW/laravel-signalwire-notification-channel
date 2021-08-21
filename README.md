@@ -1,6 +1,6 @@
 # Laravel Signalwire Notification Channel
 
-<a href="https://github.com/mcdev/signalwire-notification-channel/actions"><img src="https://github.com/laravel/SignalWire-notification-channel/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/mcdev/signalwire-notification-channel/actions"><img src="https://github.com/laravel/signalwire-notification-channel/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/mcdev/signalwire-notification-channel"><img src="https://img.shields.io/packagist/dt/mcdev/signalwire-notification-channel" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/mcdev/signalwire-notification-channel"><img src="https://img.shields.io/packagist/v/mcdev/signalwire-notification-channel" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/mcdev/signalwire-notification-channel"><img src="https://img.shields.io/packagist/l/mcdev/signalwire-notification-channel" alt="License"></a>
