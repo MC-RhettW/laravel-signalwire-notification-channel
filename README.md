@@ -7,7 +7,7 @@
 
 This package facilitate the use of the [SignalWire](https://www.signalwire.com/) messaging provider for sending notifications and message using standard Laravel conventions. 
 
-It was forked from Laravel's official [Nexmo Notification Channel](https://github.com/laravel/nexmo-notification-channel) an intended to provide feature parity with that package so that SignalWire can be used as drop-in alternative for sending SMS notifications from Laravel applications.
+It was forked from Laravel's official [Nexmo Notification Channel](https://github.com/laravel/nexmo-notification-channel) and intended to provide feature-parity so that SignalWire can be used as drop-in alternative for sending SMS notifications using standard, well-supported Laravel conventions.
 
 ## Credits
 
