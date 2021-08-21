@@ -1,18 +1,18 @@
 # Laravel Signalwire Notification Channel
 
-<a href="https://github.com/laravel/SignalWire-notification-channel/actions"><img src="https://github.com/laravel/SignalWire-notification-channel/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/SignalWire-notification-channel"><img src="https://img.shields.io/packagist/dt/laravel/SignalWire-notification-channel" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/SignalWire-notification-channel"><img src="https://img.shields.io/packagist/v/laravel/SignalWire-notification-channel" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/SignalWire-notification-channel"><img src="https://img.shields.io/packagist/l/laravel/SignalWire-notification-channel" alt="License"></a>
+<a href="https://github.com/mcdev/signalwire-notification-channel/actions"><img src="https://github.com/laravel/SignalWire-notification-channel/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/mcdev/signalwire-notification-channel"><img src="https://img.shields.io/packagist/dt/mcdev/signalwire-notification-channel" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/mcdev/signalwire-notification-channel"><img src="https://img.shields.io/packagist/v/mcdev/signalwire-notification-channel" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/mcdev/signalwire-notification-channel"><img src="https://img.shields.io/packagist/l/mcdev/signalwire-notification-channel" alt="License"></a>
 
 ## Credits
 
 ### Mankato Clinic
-Open-source MCDev software and components are developed and by the small but dedicated programming team at [Mankato Clinic](http://www.mankatoclinic.com/), a doctor-owned multi-specialty healthcare provider in southern Minnesota, USA. See more in the [CREDITS](CREDITS.md) documentation page for more information.
+Open-source MCDev software and components are developed and by the small but dedicated programming team at [Mankato Clinic](http://www.mankatoclinic.com/), a doctor-owned and community-driven multi-specialty healthcare provider serving southern Minnesota, USA. See the [CREDITS](CREDITS.md) page for more information.
 
 ### Upstream Contributor Credits
 
-MCDev software, including this package, has benefited from the work of many incredible individual and organizational open-source contributors and the open-source user community. For a list of just some of the major contributors that have empowered our work, please see the [CREDITS](CREDITS.md) documentation page.
+MCDev software, including this package, has benefited from the work of many incredible individual and organizational open-source contributors and the open-source user community. For a list of just some of the major contributors that have empowered our work, please see the [CREDITS](CREDITS.md) page.
 
 ## Installation
 
