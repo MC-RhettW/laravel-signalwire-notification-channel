@@ -1,6 +1,7 @@
 The MIT License (MIT)
 
 Copyright (c) Rhett Waldock, Mankato Clinic Ltd
+
 Laravel and upstream notification components copyright (c) Taylor Otwell
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
