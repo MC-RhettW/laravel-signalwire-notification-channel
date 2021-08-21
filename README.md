@@ -1,9 +1,9 @@
 # Laravel Signalwire Notification Channel
 
-<a href="https://github.com/MankatoClinic/signalwire-notification-channel/actions"><img src="https://github.com/MankatoClinic/signalwire-notification-channel/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/mcdev/signalwire-notification-channel"><img src="https://img.shields.io/packagist/dt/mcdev/signalwire-notification-channel" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/mcdev/signalwire-notification-channel"><img src="https://img.shields.io/packagist/v/mcdev/signalwire-notification-channel" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/mcdev/signalwire-notification-channel"><img src="https://img.shields.io/packagist/l/mcdev/signalwire-notification-channel" alt="License"></a>
+<a href="https://github.com/MankatoClinic/laravel-signalwire-notification-channel/actions"><img src="https://github.com/MankatoClinic/laravel-signalwire-notification-channel/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/mcdev/laravel-signalwire-notification-channel"><img src="https://img.shields.io/packagist/dt/mcdev/laravel-signalwire-notification-channel" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/mcdev/laravel-signalwire-notification-channel"><img src="https://img.shields.io/packagist/v/mcdev/laravel-signalwire-notification-channel" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/mcdev/laravel-signalwire-notification-channel"><img src="https://img.shields.io/packagist/l/mcdev/laravel-signalwire-notification-channel" alt="License"></a>
 
 ## Credits
 
