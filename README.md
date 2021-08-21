@@ -22,29 +22,114 @@ You can install the package via composer:
 composer require mcdev/laravel-signalwire-notification-channel
 ```
 
-You can publish the config file with:
+
+## Configuration
+
+Channel behavior can be configured using a local configuration file, environment configuration entries, or both.
+
+A local config can be published via Artisan:
+
 ```bash
 php artisan vendor:publish --provider="MCDev\Notifications\SignalWireChannelServiceProvider" --tag="config"
 ```
 
-This is the contents of the published config file:
+Here are the contents of the published config file:
 
 ```php
+
 return [
-    'from'=>env('SMS_FROM',''),
+
+    // The default phone number to send from
+    'from'=>env('SMS_FROM'),
+
+    // API credentials defined in your SignalWire space
     'credentials'=>[
-        env('SIGNALWIRE_API_PROJECT'),
-        env('SIGNALWIRE_API_TOKEN')
+        env('SIGNALWIRE_API_PROJECT'),  // 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+        env('SIGNALWIRE_API_TOKEN')     // 'PTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
     ],
-    'log_success' => 'info'
+
+    // Application log output settings
+    'log'=>[
+        'include_context' => env('SIGNALWIRE_LOG_CONTEXT',true), // Include a verbose context object in log entries where possible
+        'success_logging' => env('SIGNALWIRE_LOG_SUCCESSFUL','info') // Log level for successfully sent messages (NULL or FALSE disables)
+    ]
+
 ];
+
 ```
 
 ## Usage
 
 ```php
-$example = new MCDev\Laraskel();
-echo $example->shoutItOut('Hello, world!');
+
+namespace App\Notifications;
+use MCDev\Notifications\Messages\SignalWireMessage;
+use MCDev\Notificiations\Channels\SignalWireChannel;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Notification;
+
+class HelloAndWelcome extends Notification
+{
+
+    use Queueable;
+
+    // ...
+
+    /**
+     * Get the notification channels.
+     *
+     * @param  mixed  $notifiable
+     * @return array|string
+     */
+    public function via($notifiable)
+    {
+        return [
+            SignalWireNotificationChannel::class,
+            // ...
+        ];
+    }
+
+    /**
+     * Get SMS representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return SignalWireMessage
+     */
+    public function toSignalWire($notifiable)
+    {
+        return (new SignalWireMessage)
+                    ->content(__('Hello and welcome! This is a notification sent using SignalWire.'));
+    }
+
+    // ...
+
+}
+
+// ...
+
+namespace App\Models;
+use Illuminate\Notifications\Notifiable;
+
+class Contact
+{
+    use Notifiable;
+
+    /**
+     * Route notifications for the Nexmo channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForSignalWire($notification)
+    {
+        return $this->cellPhone ?? $this->mobilePhone ?? $this->phoneNumber;
+    }
+
+    // ...
+
+}
+
 ```
 
 ## Testing
@@ -55,18 +140,18 @@ composer test
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on recent changes. We try to include both MCDev and upstream change notes.
+Please see the [CHANGELOG](CHANGELOG.md) for more information on recent changes. We try to include both MCDev and upstream change notes.
 
 ## Contributing
 
-Code contributions and feature ideas are welcome! Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+Code contributions, bug reports and feature ideas are welcome. Please see the [CONTRIBUTING](.github/CONTRIBUTING.md) page for more information.
 
-## Security Vulnerabilities
+## Security
 
-Please review [our security policy](.github/SECURITY.md) on how to report security vulnerabilities.
+Please see this project [security page on Github](../../security/policy) for security notices and vulnerability reporting information.
 
 ## License
 
-This package is published under the MIT License (MIT) and intended to be free to use in both commercial and non-commercial projects. 
+This is an open-source package is released under the MIT License (MIT). It is free to use in both commercial and non-commercial projects. 
 
 Please see the [LICENSE](LICENSE.md) document for more information.
