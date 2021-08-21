@@ -5,6 +5,10 @@
 <a href="https://packagist.org/packages/mcdev/laravel-signalwire-notification-channel"><img src="https://img.shields.io/packagist/v/mcdev/laravel-signalwire-notification-channel" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/mcdev/laravel-signalwire-notification-channel"><img src="https://img.shields.io/packagist/l/mcdev/laravel-signalwire-notification-channel" alt="License"></a>
 
+This package facilitate the use of the [SignalWire](https://www.signalwire.com/) messaging provider for sending notifications and message using standard Laravel conventions. 
+
+It was forked from Laravel's official [Nexmo Notification Channel](https://github.com/laravel/nexmo-notification-channel) an intended to provide feature parity with that package so that SignalWire can be used as drop-in alternative for sending SMS notifications from Laravel applications.
+
 ## Credits
 
 ### Mankato Clinic
