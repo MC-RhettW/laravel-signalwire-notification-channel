@@ -19,7 +19,7 @@
     "require": {
         "php": "^7.2|^8.0",
         "composer/package-versions-deprecated": "^1.8",
-        "illuminate/config": "^8.0",
+        "illuminate/config": "^6.0|^7.0|^8.0",
         "illuminate/notifications": "^6.0|^7.0|^8.0",
         "laravel/helpers": "^1.4",
         "signalwire/signalwire": "^2.3"
