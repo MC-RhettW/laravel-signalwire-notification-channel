@@ -6,12 +6,16 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Notification;
 use MCDev\Notifications\Channels\SignalWireChannel;
 use MCDev\Notifications\Messages\SignalWireMessage;
-use MCDev\Tests\Notifications\TestCase;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use SignalWire\Relay\Client;
 
 class SignalWireChannelTest extends TestCase
 {
+
+    use MockeryPHPUnitIntegration;
+
     public function testMsgSentViaSignalWire(): void
     {
         $notification = new NotificationSignalWireChannelTestNotification;
@@ -27,7 +31,7 @@ class SignalWireChannelTest extends TestCase
                 'from' => '4444444444',
                 'to' => '5555555555',
                 'text' => 'Testing 1-2-3, from the SignalWire channel test suite.',
-                'tags' => 'test-tag1'
+                'tags' => []
             ])
             ->once();
 
@@ -43,7 +47,7 @@ class SignalWireChannelTest extends TestCase
                 'from' => '4444444444',
                 'to' => '5555555555',
                 'text' => 'Testing 1-2-3, from the SignalWire channel test suite.',
-                'tags' => 'test-tag1'
+                'tags' => []
             ])
             ->once();
 

@@ -1,5 +1,9 @@
 # Change Log
 
+## v3.0.21.5632-dev (2021-08-23)
+
+- Additional test fixes and docs corrections
+
 ## v3.0.21.5631-dev (2021-08-23)
 
 - Initial updates to unit test suite

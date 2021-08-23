@@ -4,7 +4,8 @@
 
 ## Supported Versions
 
-Please use the latest tagged release to receive security and feature updates.
+Please use the latest tagged release to receive security and feature updates. This package is only tested and bug-fixed
+for Laravel 6 and above.
 
 ## Reporting a Vulnerability
 
