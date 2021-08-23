@@ -1,31 +1,24 @@
-# Laravel Signalwire Notification Channel
+# SignalWire Notification Channel for Laravel
 
 <a href="https://github.com/MankatoClinic/laravel-signalwire-notification-channel/actions"><img src="https://github.com/MankatoClinic/laravel-signalwire-notification-channel/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/mcdev/laravel-signalwire-notification-channel"><img src="https://img.shields.io/packagist/dt/mcdev/laravel-signalwire-notification-channel" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/mcdev/laravel-signalwire-notification-channel"><img src="https://img.shields.io/packagist/v/mcdev/laravel-signalwire-notification-channel" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/mcdev/laravel-signalwire-notification-channel"><img src="https://img.shields.io/packagist/l/mcdev/laravel-signalwire-notification-channel" alt="License"></a>
 
-This package facilitate the use of the [SignalWire](https://www.signalwire.com/) messaging provider for sending notifications and message using standard Laravel conventions. 
+This package facilitate the use of the [SignalWire](https://www.signalwire.com/) messaging provider for sending
+notifications and message using standard Laravel conventions.
 
-It was forked from Laravel's official [Nexmo Notification Channel](https://github.com/laravel/nexmo-notification-channel) and intended to provide feature-parity so that SignalWire can be used as drop-in alternative for sending SMS notifications using standard, well-supported Laravel conventions.
-
-## Credits
-
-### Mankato Clinic
-Open-source MCDev software and components are developed and by the small but dedicated programming team at [Mankato Clinic](http://www.mankatoclinic.com/), a doctor-owned and community-driven multi-specialty healthcare provider serving southern Minnesota, USA. See the [CREDITS](CREDITS.md) page for more information.
-
-### Upstream Contributor Credits
-
-MCDev software, including this package, has benefited from the work of many incredible individual and organizational open-source contributors and the open-source user community. For a list of just some of the major contributors that have empowered our work, please see the [CREDITS](CREDITS.md) page.
+It was forked from the official Laravel [Nexmo Notification Channel](https://github.com/laravel/nexmo-notification-channel) and intended to provide
+feature-parity so that SignalWire can be used as drop-in alternative for sending SMS notifications using standard,
+well-supported Laravel conventions.
 
 ## Installation
 
-You can install the package via composer:
+This package can be installed via Composer:
 
 ```bash
 composer require mcdev/laravel-signalwire-notification-channel
 ```
-
 
 ## Configuration
 
@@ -64,9 +57,12 @@ return [
 
 ## Usage
 
+### Notification Example
+
 ```php
 
 namespace App\Notifications;
+
 use MCDev\Notifications\Messages\SignalWireMessage;
 use MCDev\Notificiations\Channels\SignalWireChannel;
 use Illuminate\Bus\Queueable;
@@ -110,9 +106,14 @@ class HelloAndWelcome extends Notification
 
 }
 
-// ...
+```
+
+### Notifiable Example
+
+```php
 
 namespace App\Models;
+
 use Illuminate\Notifications\Notifiable;
 
 class Contact
@@ -142,20 +143,41 @@ class Contact
 composer test
 ```
 
+## Credits
+
+### Mankato Clinic
+
+Open-source MCDev software and components are developed and by the small but dedicated programming team
+at [Mankato Clinic](http://www.mankatoclinic.com/), a doctor-owned and community-driven multi-specialty healthcare
+provider serving southern Minnesota, USA.
+
+### Upstream Contributor Credits
+
+MCDev software, including this package, has benefited from the work of many incredible individual and organizational
+open-source contributors and the open-source user community.
+
+Major external and upstream contributions for this package have come from:
+
+- (Laravel Nexmo Notification Channel)[https://github.com/laravel/nexmo-notification-channel] by (Taylor Otwell)[https://github.com/taylorotwell] and (the Laravel team)[https://laravel.com/team]
+
 ## Changelog
 
-Please see the [CHANGELOG](CHANGELOG.md) for more information on recent changes. We try to include both MCDev and upstream change notes.
+Please see the [CHANGELOG](CHANGELOG.md) for more information on recent changes. We try to include both MCDev and
+upstream change notes.
 
 ## Contributing
 
-Code contributions, bug reports and feature ideas are welcome. Please see the [CONTRIBUTING](.github/CONTRIBUTING.md) page for more information.
+Code contributions, bug reports and feature ideas are welcome. Please see the [CONTRIBUTING](.github/CONTRIBUTING.md)
+page for more information.
 
 ## Security
 
-Please see this project [security page on Github](../../security/policy) for security notices and vulnerability reporting information.
+Please see this project [security page on Github](../../security/policy) for security notices and vulnerability
+reporting information.
 
 ## License
 
-This is an open-source package is released under the MIT License (MIT). It is free to use in both commercial and non-commercial projects. 
+This is an open-source package is released under the MIT License (MIT). It is free to use in both commercial and
+non-commercial projects.
 
 Please see the [LICENSE](LICENSE.md) document for more information.

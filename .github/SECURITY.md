@@ -8,7 +8,8 @@ Please use the latest tagged release to receive security and feature updates.
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within Laravel, please send an email to the maintainer, Rhett Waldock <rhettw@mankatoclinic.com>.
+If you discover a security vulnerability within Laravel, please send an email to the maintainer, Rhett
+Waldock <rhettw@mankatoclinic.com>.
 
 ### Public PGP Key
 

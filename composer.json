@@ -1,7 +1,14 @@
 {
     "name": "mcdev/laravel-signalwire-notification-channel",
     "description": "SignalWire notification channel for the Laravel framework.",
-    "keywords": ["laravel", "notifications", "signalwire", "sms", "relay", "voice"],
+    "keywords": [
+        "laravel",
+        "notifications",
+        "signalwire",
+        "sms",
+        "relay",
+        "voice"
+    ],
     "license": "MIT",
     "authors": [
         {

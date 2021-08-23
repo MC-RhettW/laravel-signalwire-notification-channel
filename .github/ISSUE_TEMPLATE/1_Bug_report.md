@@ -12,7 +12,6 @@ about: "Please let us know about technical issues you encounter with this packag
 
 ### Description:
 
-
 ### Steps To Reproduce:
 
 <!-- If possible, please provide a GitHub repository to demonstrate your issue -->

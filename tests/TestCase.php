@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Tests\Notifications;
+namespace MCDev\Tests\Notifications;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase as BaseTestCase;

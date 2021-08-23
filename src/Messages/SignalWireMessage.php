@@ -2,6 +2,8 @@
 
 namespace MCDev\Notifications\Messages;
 
+use SignalWire\Relay\Client;
+
 class SignalWireMessage
 {
     /**
@@ -19,16 +21,9 @@ class SignalWireMessage
     public $from;
 
     /**
-     * The message type.
-     *
-     * @var string
-     */
-    public $type = 'text';
-
-    /**
      * The custom SignalWire client instance.
      *
-     * @var \SignalWire\Relay\Client|null
+     * @var Client|null
      */
     public $client;
 
@@ -37,7 +32,7 @@ class SignalWireMessage
      *
      * @var array
      */
-    public $tags = '';
+    public $tags = [];
 
     /**
      * Message context
@@ -52,7 +47,7 @@ class SignalWireMessage
      * @param  string  $content
      * @return void
      */
-    public function __construct($content = '')
+    public function __construct(string $content = '')
     {
         $this->content = $content;
     }
@@ -63,7 +58,7 @@ class SignalWireMessage
      * @param  string  $content
      * @return $this
      */
-    public function content($content)
+    public function content(string $content): self
     {
         $this->content = $content;
 
@@ -76,7 +71,7 @@ class SignalWireMessage
      * @param  string  $from
      * @return $this
      */
-    public function from($from)
+    public function from(string $from): self
     {
         $this->from = $from;
 
@@ -88,7 +83,7 @@ class SignalWireMessage
      *
      * @return $this
      */
-    public function unicode()
+    public function unicode(): self
     {
         $this->type = 'unicode';
 
@@ -98,31 +93,34 @@ class SignalWireMessage
     /**
      * Set the client reference (up to 40 characters).
      *
-     * @param  string  $clientReference
+     * @param  string  $context
      * @return $this
      */
-    public function withContext($context)
+    public function withContext(string $context): self
     {
         $this->context = $context ?? '';
 
         return $this;
     }
 
-        /**
+    /**
      * Set the client reference (up to 40 characters).
      *
      * @param  string|array  $tags
      * @return $this
      */
-    public function withTags($tags)
+    public function withTags($tags): self
     {
         if (!empty($tags)) {
-            if (is_string($tags)) $this->tags = explode(',',$tags);
-            elseif (!is_array($tags)) $this->tags = [$tags];
-            else $this->tags = $tags;
-        }
-        else {
-            $this->tags=[];
+            if (is_string($tags)) {
+                $this->tags = explode(',', $tags);
+            } elseif (!is_array($tags)) {
+                $this->tags = [$tags];
+            } else {
+                $this->tags = $tags;
+            }
+        } else {
+            $this->tags = [];
         }
 
         return $this;
@@ -131,10 +129,10 @@ class SignalWireMessage
     /**
      * Set the SignalWire client instance.
      *
-     * @param  \SignalWire\Client  $clientReference
+     * @param  Client  $client
      * @return $this
      */
-    public function usingClient($client)
+    public function usingClient(Client $client): self
     {
         $this->client = $client;
 
