@@ -2,12 +2,13 @@
 
 namespace MCDev\Notifications;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\ServiceProvider;
 use MCDev\Notifications\Channels\SignalWireChannel;
-use SignalWire\Relay\Client;
+use SignalWire\Rest\Client;
 
 class SignalWireChannelServiceProvider extends ServiceProvider
 {
@@ -17,7 +18,7 @@ class SignalWireChannelServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // Allow config file publication from Artisan console
         if ($this->app->runningInConsole()) {
@@ -31,20 +32,35 @@ class SignalWireChannelServiceProvider extends ServiceProvider
      * Service provider registration
      *
      * @return void
+     * @throws BindingResolutionException
      */
-    public function register()
+    public function register() :void
     {
         // Merge local and vendor config files
         $this->mergeConfigFrom(__DIR__.'/../config/signalwire.php', 'signalwire');
 
         // Register the notification channel
         Notification::resolved(function (ChannelManager $service) {
+
             // Setup SignalWire channel(s)
             $swChannelCallback = function () {
+
                 return new SignalWireChannel(
-                    $this->app->make(Client::class, Config::get('signalwire.credentials')),
-                    Config::get('services.signalwire.from')
+                    $this->app->make(
+                        Client::class,
+                        [
+                            Config::get('signalwire.project_id') ?? Config::get('services.signalwire.project_id'),
+                            Config::get('signalwire.api_token') ?? Config::get('services.signalwire.api_token'),
+                            [
+                                'signalwireSpaceUrl' =>
+                                    Config::get('signalwire.space_url') ??
+                                    Config::get('services.signalwire.space_url')
+                            ]
+                        ]
+                    ),
+                    Config::get('signalwire.from') ?? Config::get('services.signalwire.from')
                 );
+
             };
 
             // SignalWire-specific channel
@@ -54,6 +70,7 @@ class SignalWireChannelServiceProvider extends ServiceProvider
             if (!array_key_exists('Sms', $service->getDrivers())) {
                 $service->extend('Sms', $swChannelCallback);
             }
+
         });
     }
 }

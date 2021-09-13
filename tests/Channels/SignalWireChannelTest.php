@@ -1,4 +1,8 @@
-<?php
+<?php /** @noinspection PhpPropertyOnlyWrittenInspection */
+
+/** @noinspection UnusedConstructorDependenciesInspection */
+
+/** @noinspection PhpUnusedParameterInspection */
 
 namespace MCDev\Tests\Notifications\Channels;
 
@@ -9,157 +13,90 @@ use MCDev\Notifications\Messages\SignalWireMessage;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
-use SignalWire\Relay\Client;
+use SignalWire\Rest\Client;
 
 class SignalWireChannelTest extends TestCase
 {
 
     use MockeryPHPUnitIntegration;
 
+    private $defaultContent = 'Testing 1-2-3, from the SignalWire channel test suite.';
+    private $defaultFrom = '4444444444';
+    private $defaultClient;
+    private $notice;
+    private $contact;
+
+    private function init() {
+        $this->defaultClient = m::mock(Client::class);
+        $this->notice = new SignalWireTestNotification();
+        $this->contact = new SignalWireTestNotifiable();
+    }
+
     public function testMsgSentViaSignalWire(): void
     {
-        $notification = new NotificationSignalWireChannelTestNotification;
-        $notifiable = new NotificationSignalWireChannelTestNotifiable;
 
-        $channel = new SignalWireChannel(
-            $SignalWire = m::mock(Client::class), '4444444444'
-        );
+        $this->init();
+        $this->defaultClient->shouldReceive('messages->create')->once();
 
-        $SignalWire->shouldReceive('message->send')
-            ->with([
-                'context' => 'notifications',
-                'from' => '4444444444',
-                'to' => '5555555555',
-                'text' => 'Testing 1-2-3, from the SignalWire channel test suite.',
-                'tags' => []
-            ])
-            ->once();
+        $channel = new SignalWireChannel($this->defaultClient, $this->defaultFrom);
+        $channel->send($this->contact, $this->notice);
 
-        $channel->send($notifiable, $notification);
     }
 
     public function testMsgSentViaSignalWireWithCustomClient(): void
     {
-        $customSignalWire = m::mock(Client::class);
-        $customSignalWire->shouldReceive('message->send')
-            ->with([
-                'type' => 'text',
-                'from' => '4444444444',
-                'to' => '5555555555',
-                'text' => 'Testing 1-2-3, from the SignalWire channel test suite.',
-                'tags' => []
-            ])
-            ->once();
+        $this->init();
+        $custom = m::mock(Client::class);
 
-        $notification = new NotificationSignalWireChannelTestCustomClientNotification($customSignalWire);
-        $notifiable = new NotificationSignalWireChannelTestNotifiable;
+        $notification = new NotificationSignalWireChannelTestCustomClientNotification($custom);
+        $notifiable = new SignalWireTestNotifiable;
 
-        $channel = new SignalWireChannel(
-            $SignalWire = m::mock(Client::class), '4444444444'
-        );
+        $custom->shouldReceive('messages->create')->once();
+        $this->defaultClient->shouldNotReceive('messages->create');
 
-        $SignalWire->shouldNotReceive('message->send');
-
+        $channel = new SignalWireChannel($custom, $this->defaultFrom);
         $channel->send($notifiable, $notification);
+
     }
 
     public function testMsgSentViaSignalWireWithCustomFrom(): void
     {
+        $signalwire = m::mock(Client::class);
         $notification = new NotificationSignalWireChannelTestCustomFromNotification;
-        $notifiable = new NotificationSignalWireChannelTestNotifiable;
+        $notifiable = new SignalWireTestNotifiable;
 
-        $channel = new SignalWireChannel(
-            $SignalWire = m::mock(Client::class), '4444444444'
-        );
+        $channel = new SignalWireChannel($signalwire, '4444444444');
 
-        $SignalWire->shouldReceive('message->send')
-            ->with([
-                'context' => 'notifications',
-                'from' => '5554443333',
-                'to' => '5555555555',
-                'text' => 'Testing 1-2-3, from the SignalWire channel test suite.',
-                'tags' => []
-            ])
-            ->once();
+        $signalwire->shouldReceive('messages->create')->once();
 
         $channel->send($notifiable, $notification);
     }
 
     public function testMsgSentViaSignalWireWithCustomFromAndClient(): void
     {
-        $customSignalWire = m::mock(Client::class);
-        $customSignalWire->shouldReceive('message->send')
-            ->with([
-                'context' => 'notifications',
-                'from' => '5554443333',
-                'to' => '5555555555',
-                'text' => 'Testing 1-2-3, from the SignalWire channel test suite.',
-                'tags' => []
-            ])
-            ->once();
+        $this->init();
+        $custom = m::mock(Client::class);
 
-        $notification = new NotificationSignalWireChannelTestCustomFromAndClientNotification($customSignalWire);
-        $notifiable = new NotificationSignalWireChannelTestNotifiable;
+        $notification = new NotificationSignalWireChannelTestCustomFromAndClientNotification($custom);
+        $notifiable = new SignalWireTestNotifiable;
 
-        $channel = new SignalWireChannel(
-            $SignalWire = m::mock(Client::class), '4444444444'
-        );
+        $channel = new SignalWireChannel($custom, '4444444444');
 
-        $SignalWire->shouldNotReceive('message->send');
+        $custom->shouldReceive('messages->create')->once();
+        $this->defaultClient->shouldNotReceive('messages->create');
 
         $channel->send($notifiable, $notification);
+
     }
 
-    public function testMsgSentViaSignalWireWithCustomFromAndTags(): void
+    public function tearDown(): void
     {
-        $notification = new NotificationSignalWireChannelTestCustomTagsFromAndContextNotification;
-        $notifiable = new NotificationSignalWireChannelTestNotifiable;
-
-        $channel = new SignalWireChannel(
-            $SignalWire = m::mock(Client::class), '4444444444'
-        );
-
-        $SignalWire->shouldReceive('message->send')
-            ->with([
-                'context' => 'notifications',
-                'from' => '5554443333',
-                'to' => '5555555555',
-                'text' => 'Testing 1-2-3, from the SignalWire channel test suite.',
-                'tags' => ['tag1', 'tag2']
-            ])
-            ->once();
-
-        $channel->send($notifiable, $notification);
-    }
-
-    public function testMsgSentViaSignalWireWithCustomClientFromAndContext(): void
-    {
-        $customSignalWire = m::mock(Client::class);
-        $customSignalWire->shouldReceive('message->send')
-            ->with([
-                'context' => 'custom-notifications',
-                'from' => '5554443333',
-                'to' => '5555555555',
-                'text' => 'Testing 1-2-3, from the SignalWire channel test suite.',
-                'tags' => []
-            ])
-            ->once();
-
-        $notification = new NotificationSignalWireChannelTestCustomClientFromAndContextNotification($customSignalWire);
-        $notifiable = new NotificationSignalWireChannelTestNotifiable;
-
-        $channel = new SignalWireChannel(
-            $SignalWire = m::mock(Client::class), '4444444444'
-        );
-
-        $SignalWire->shouldNotReceive('message->send');
-
-        $channel->send($notifiable, $notification);
+        m::close();
     }
 
 }
 
-class NotificationSignalWireChannelTestNotifiable
+class SignalWireTestNotifiable
 {
     use Notifiable;
 
@@ -171,12 +108,23 @@ class NotificationSignalWireChannelTestNotifiable
     }
 }
 
-class NotificationSignalWireChannelTestNotification extends Notification
+class SignalWireTestNotification extends Notification
 {
+
+    private $client;
+
+    public function __construct(Client $client=null)
+    {
+        if (null !== $client) {
+            $this->client = $client;
+        }
+    }
+
     public function toSignalWire($notifiable): SignalWireMessage
     {
         return new SignalWireMessage('Testing 1-2-3, from the SignalWire channel test suite.');
     }
+
 }
 
 class NotificationSignalWireChannelTestCustomClientNotification extends Notification
@@ -217,35 +165,6 @@ class NotificationSignalWireChannelTestCustomFromAndClientNotification extends N
     {
         return (new SignalWireMessage('Testing 1-2-3, from the SignalWire channel test suite.'))
             ->from('5554443333')
-            ->usingClient($this->client);
-    }
-}
-
-class NotificationSignalWireChannelTestCustomTagsFromAndContextNotification extends Notification
-{
-    public function toSignalWire($notifiable): SignalWireMessage
-    {
-        return (new SignalWireMessage('Testing 1-2-3, from the SignalWire channel test suite.'))
-            ->from('5554443333')
-            ->withTags(['tag1', 'tag2'])
-            ->withContext('custom-context');
-    }
-}
-
-class NotificationSignalWireChannelTestCustomClientFromAndContextNotification extends Notification
-{
-    private $client;
-
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
-
-    public function toSignalWire($notifiable): SignalWireMessage
-    {
-        return (new SignalWireMessage('Testing 1-2-3, from the SignalWire channel test suite.'))
-            ->from('5554443333')
-            ->withContext('custom-context')
             ->usingClient($this->client);
     }
 }

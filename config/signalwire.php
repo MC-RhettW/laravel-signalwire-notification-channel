@@ -14,10 +14,9 @@ return [
     'from' => env('SMS_FROM'),
 
     // API credentials defined in your SignalWire space
-    'credentials' => [
-        env('SIGNALWIRE_API_PROJECT'),  // 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
-        env('SIGNALWIRE_API_TOKEN')     // 'PTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-    ],
+    'project_id' => env('SIGNALWIRE_API_PROJECT'),  // 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+    'api_token' => env('SIGNALWIRE_API_TOKEN'),     // 'PTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+    'space_url' => env('SIGNALWIRE_SPACE_URL'),     // 'example.signalwire.com'
 
     // Application log output settings
     'log' => [

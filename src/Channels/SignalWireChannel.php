@@ -7,15 +7,15 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use MCDev\Notifications\Exceptions\SignalWireSendResultUnsuccessful as SendFailure;
 use MCDev\Notifications\Messages\SignalWireMessage;
-use SignalWire\Relay\Client;
-use SignalWire\Relay\Messaging\SendResult;
+use SignalWire\Rest\Client;
+use Twilio\Exceptions\TwilioException;
 
 class SignalWireChannel
 {
     /**
      * The SignalWire API client instance.
      *
-     * @var \SignalWire\Relay\Client
+     * @var Client
      */
     protected $api;
 
@@ -29,7 +29,7 @@ class SignalWireChannel
     /**
      * Create a new SignalWire channel instance.
      *
-     * @param  \SignalWire\Relay\Client  $client
+     * @param  Client  $client
      * @param  string  $from
      * @return void
      */
@@ -45,6 +45,7 @@ class SignalWireChannel
      * @param  mixed  $notifiable
      * @param  Notification  $notification
      * @return SignalWireMessage|null
+     * @throws SendFailure
      */
     public function send($notifiable, Notification $notification): ?SignalWireMessage
     {
@@ -64,32 +65,39 @@ class SignalWireChannel
         }
 
         $payload = [
-            'context' => $message->context,
+            //'context' => $message->context,
             'from' => $message->from ?: $this->from,
             'to' => $to,
-            'text' => trim($message->content),
-            'tags' => $message->tags
+            'body' => trim($message->content),
+            //'tags' => $message->tags
         ];
 
-        // Send the message and return the result / promise
-        return ($message->client ?? $this->api)->messaging->send($payload)->done(function (SendResult $result) use (
-            $payload
-        ) {
-            // Setup some handling vars
-            $context = Config::get('signalwire.log_context', true) ? ['payload' => $payload, 'result' => $result] : [];
-            $message_id = $result->getMessageId();
-            $success_logging = strtolower(Config::get('signalwire.log.success_logging', 'info'));
+        // Detect a number group being used as "From" element
+        if (strlen($payload['from']) > 15) {
+            $payload['MessagingServiceSid'] = $payload['from'];
+            unset($payload['from']);
+        }
 
-            // Log any failed attempt and throw an exception
-            if (!$result->isSuccessful()) {
-                $exception = new SendFailure("SignalWire message '$message_id' was unsuccessful.");
-                Log::error($exception->getMessage(), $context);
-                throw $exception;
-            } // Log successful attempts as appropriate
-            elseif ($success_logging) {
-                $logMethod = method_exists(Log::class, $success_logging) ? $success_logging : 'info';
-                Log::$logMethod("SignalWire message '$message_id' sent successfully.", $context);
-            }
-        });
+        // Send the message and return the result / promise
+        try {
+            $result = ($message->client ?? $this->api)->messages->create($payload['to'],$payload);
+        } catch (TwilioException $e) {
+            throw new SendFailure($e->getMessage());
+        }
+
+        // Log the successful result according to config settings
+        if (Config::get('signalwire.log.success_logging')) {
+            Log::log(
+                Config::get('signalwire.log.success_logging'),
+                "Message {$result->sid} sent via SignalWire",
+                Config::get('signalwire.log.include_context')
+                    ? ['payload'=>$payload,'result'=>$result]
+                    : []
+            );
+        }
+
+        return $result;
+
+
     }
 }

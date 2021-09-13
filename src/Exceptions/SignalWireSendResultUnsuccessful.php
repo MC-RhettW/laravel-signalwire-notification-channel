@@ -2,6 +2,8 @@
 
 namespace MCDev\Notifications\Exceptions;
 
-class SignalWireSendResultUnsuccessful extends \RuntimeException
+use RuntimeException;
+
+class SignalWireSendResultUnsuccessful extends RuntimeException
 {
 }

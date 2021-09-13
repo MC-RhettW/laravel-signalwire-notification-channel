@@ -2,7 +2,7 @@
 
 namespace MCDev\Notifications\Messages;
 
-use SignalWire\Relay\Client;
+use SignalWire\Rest\Client;
 
 class SignalWireMessage
 {
@@ -86,42 +86,6 @@ class SignalWireMessage
     public function unicode(): self
     {
         $this->type = 'unicode';
-
-        return $this;
-    }
-
-    /**
-     * Set the client reference (up to 40 characters).
-     *
-     * @param  string  $context
-     * @return $this
-     */
-    public function withContext(string $context): self
-    {
-        $this->context = $context ?? '';
-
-        return $this;
-    }
-
-    /**
-     * Set the client reference (up to 40 characters).
-     *
-     * @param  string|array  $tags
-     * @return $this
-     */
-    public function withTags($tags): self
-    {
-        if (!empty($tags)) {
-            if (is_string($tags)) {
-                $this->tags = explode(',', $tags);
-            } elseif (!is_array($tags)) {
-                $this->tags = [$tags];
-            } else {
-                $this->tags = $tags;
-            }
-        } else {
-            $this->tags = [];
-        }
 
         return $this;
     }

@@ -1,5 +1,12 @@
 # Change Log
 
+## v3.0.21.6120-dev (2021-09-10)
+
+- Retarget from Relay to REST endpoints (for now)
+- Removed message context and tagging structures (for now)
+- Configuration changes
+- Added optional success logging
+
 ## v3.0.21.5632-dev (2021-08-23)
 
 - Additional test fixes and docs corrections
